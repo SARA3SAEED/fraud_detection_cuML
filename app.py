@@ -71,6 +71,38 @@ def predict_form():
 
 
 
+
+def predict_fraud(file, model, scaler, model_features):
+    try:
+        # Read the CSV file
+        df = pd.read_csv(file)
+
+        # Convert categorical columns
+        for col in ['gender', 'state', 'category', 'merchant']:
+            if col in df.columns:
+                df[col] = df[col].astype('category').cat.codes
+
+        # Convert datetime columns
+        for col in ['dob', 'trans_date', 'trans_time']:
+            if col in df.columns:
+                df[col] = pd.to_datetime(df[col], errors='coerce')
+                df[col] = df[col].astype('int64') / 10**9
+
+        # Scale numerical features
+        numerical_features = ['zip', 'city_pop', 'unix_time', 'amt']
+        df[numerical_features] = scaler.transform(df[numerical_features])
+
+        # Align features
+        df = df[model_features]
+
+        # Predict
+        predictions = model.predict(df)
+        return f"Predictions: {predictions.tolist()}"
+
+    except Exception as e:
+        return f"Error processing file: {e}"
+
+
 # ------------------------------------------------------------------------------------#
 @app.route('/')
 def home():
