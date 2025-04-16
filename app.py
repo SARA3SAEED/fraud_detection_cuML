@@ -67,9 +67,9 @@ def predict():
     if not file:
         return render_template('result.html', prediction="Error: no file uploaded")
     
-    file_path = f'/tmp/{file.filename}'
-    file.save(file_path)
-    pred = predict_fraud(file_path)
+    # file_path = f'/tmp/{file.filename}'
+    # file.save(file_path)
+    pred = predict_fraud(file)
     return render_template('result.html', prediction=pred)
 
 
