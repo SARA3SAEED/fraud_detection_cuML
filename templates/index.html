@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,5 +30,102 @@
         Trans Time (HH:MM:SS): <input type="text" name="trans_time"><br>
         <button type="submit">Submit & Predict</button>
     </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<title>Fraud Detection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<body>
+
+<div class="w3-card-4 w3-margin">
+  <div class="w3-container w3-brown">
+    <h2>Manual Fraud Check</h2>
+  </div>
+
+  <form class="w3-container" action="/predict_form" method="POST">
+    <p>
+      <label class="w3-text-brown"><b>Gender</b></label>
+      <select class="w3-select w3-border w3-sand" name="gender">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>State</b></label>
+      <input class="w3-input w3-border w3-sand" name="state" type="text">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Category</b></label>
+      <input class="w3-input w3-border w3-sand" name="category" type="text">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Merchant</b></label>
+      <input class="w3-input w3-border w3-sand" name="merchant" type="text">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Zip Code</b></label>
+      <input class="w3-input w3-border w3-sand" name="zip" type="number">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>City Population</b></label>
+      <input class="w3-input w3-border w3-sand" name="city_pop" type="number">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Unix Time</b></label>
+      <input class="w3-input w3-border w3-sand" name="unix_time" type="number" step="any">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Transaction Amount</b></label>
+      <input class="w3-input w3-border w3-sand" name="amt" type="number" step="any">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Date of Birth</b></label>
+      <input class="w3-input w3-border w3-sand" name="dob" type="date">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Transaction Date</b></label>
+      <input class="w3-input w3-border w3-sand" name="trans_date" type="date">
+    </p>
+
+    <p>
+      <label class="w3-text-brown"><b>Transaction Time</b></label>
+      <input class="w3-input w3-border w3-sand" name="trans_time" type="time">
+    </p>
+
+    <p>
+      <button class="w3-btn w3-brown" type="submit">Predict Fraud</button>
+    </p>
+  </form>
+</div>
+
+<!-- CSV Upload Option -->
+<div class="w3-card-4 w3-margin">
+  <div class="w3-container w3-brown">
+    <h2>Or Upload CSV File</h2>
+  </div>
+
+  <form class="w3-container" action="/predict" method="POST" enctype="multipart/form-data">
+    <p>
+      <input class="w3-input w3-border w3-sand" type="file" name="file">
+    </p>
+    <p>
+      <button class="w3-btn w3-brown" type="submit">Upload & Predict</button>
+    </p>
+  </form>
+</div>
+
 </body>
 </html>
