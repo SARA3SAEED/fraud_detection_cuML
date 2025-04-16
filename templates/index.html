@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fraud Prediction Service</title>
+    <title>Fraud Prediction</title>
 </head>
 <body>
-    <h1>Upload a CSV file for Prediction</h1>
+    <h1>Fraud Detection App</h1>
+
+    <h2>Upload CSV File</h2>
     <form action="/predict" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".csv" required />
-        <button type="submit">Upload</button>
+        <input type="file" name="file">
+        <button type="submit">Upload & Predict</button>
+    </form>
+
+    <hr>
+
+    <h2>Or Enter Transaction Manually</h2>
+    <form action="/predict_form" method="POST">
+        Gender: <input type="text" name="gender"><br>
+        State: <input type="text" name="state"><br>
+        Category: <input type="text" name="category"><br>
+        Merchant: <input type="text" name="merchant"><br>
+        Zip: <input type="number" name="zip"><br>
+        City Pop: <input type="number" name="city_pop"><br>
+        Unix Time: <input type="number" name="unix_time"><br>
+        Amount: <input type="number" name="amt"><br>
+        DOB (YYYY-MM-DD): <input type="text" name="dob"><br>
+        Trans Date (YYYY-MM-DD): <input type="text" name="trans_date"><br>
+        Trans Time (HH:MM:SS): <input type="text" name="trans_time"><br>
+        <button type="submit">Submit & Predict</button>
     </form>
 </body>
 </html>
