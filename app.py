@@ -59,26 +59,19 @@ def home():
     return render_template('index.html')  # Make sure index.html is in the 'templates' folder
 
 # Prediction route to handle file upload
+from flask import render_template
+
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        # Get the uploaded file
-        file = request.files['file']
-        if not file:
-            return jsonify({'error': 'No file uploaded'}), 400
-        
-        # Save the file temporarily
-        file_path = f'/tmp/{file.filename}'
-        file.save(file_path)
+    file = request.files.get('file')
+    if not file:
+        return render_template('result.html', prediction="Error: no file uploaded")
+    
+    file_path = f'/tmp/{file.filename}'
+    file.save(file_path)
+    pred = predict_fraud(file_path)
+    return render_template('result.html', prediction=pred)
 
-        # Call the prediction function
-        prediction = predict_fraud(file_path)
-
-        # Return the prediction as a JSON response
-        return jsonify({'prediction': prediction})
-
-    except Exception as e:
-        return jsonify({'error': f'Error during prediction: {str(e)}'}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
