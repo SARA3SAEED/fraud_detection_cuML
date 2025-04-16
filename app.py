@@ -6,14 +6,19 @@ import os
 # Define the function to predict fraud
 def predict_fraud(data_path, model_path='model.pkl', scaler_path='scaler.pkl'):
     try:
-        # Load the model and scaler from the project directory
+        import joblib
+        import pandas as pd
+
+        # Load the model and scaler
         model = joblib.load(model_path)
         model_features = model.get_booster().feature_names
         scaler = joblib.load(scaler_path)
 
-        # Read data from the uploaded CSV file
+        # Read data from CSV and take the first row
         input_df = pd.read_csv(data_path)
         input_df = input_df.iloc[[0]]  # Select only the first row for prediction
+
+        print("Input DataFrame columns:", input_df.columns)
 
         # Convert columns to categories
         input_df['gender'] = input_df['gender'].astype('category')
@@ -27,7 +32,7 @@ def predict_fraud(data_path, model_path='model.pkl', scaler_path='scaler.pkl'):
         input_df['dob'] = pd.to_datetime(input_df['dob'])
 
         # Feature engineering
-        categorical_features = ['gender', 'state', 'category', 'merchant']
+        categorical_features = ['gender', 'state','category', 'merchant']
         numerical_features = ['zip', 'city_pop', 'unix_time', 'amt']
 
         for col in categorical_features:
@@ -40,15 +45,18 @@ def predict_fraud(data_path, model_path='model.pkl', scaler_path='scaler.pkl'):
         input_df[numerical_features] = scaler.transform(input_df[numerical_features])
 
         # Align features with model input
+        print("Final input features:", input_df.columns)
+        print("Model expects:", model_features)
         input_df = input_df[model_features]
 
-        # Predict using the model
+        # Predict
         prediction = model.predict(input_df)
         return int(prediction[0])
 
     except Exception as e:
         print(f"Error during prediction: {e}")
         return -1
+
 
 # Flask app setup
 app = Flask(__name__)
